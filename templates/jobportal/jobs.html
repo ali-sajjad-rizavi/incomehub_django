@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Jobs {% endblock title %}
+{% block heading %}
+    <div class="page-heading about-heading header-text"
+         style="background-image: url({% static 'assets/images/heading-6-1920x500.jpg' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content">
+                        <h4>Find your interests</h4>
+                        <h2>Jobs</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock heading %}
+
+
+{% block content %}
+    <div class="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="contact-form">
+                        <form method="GET">
+                            <a href="{% url 'job-create' %}" class="filled-button mb-lg-5">Post a Job!</a>
+                            <h5 style="margin-bottom: 15px">Type</h5>
+
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="contract">
+                                    <small>Contract</small>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="full_time">
+                                    <small>Full time</small>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="part_time">
+                                    <small>Part time</small>
+                                </label>
+                            </div>
+
+                            <br>
+
+                            <h5 style="margin-bottom: 15px">Category</h5>
+
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="it">
+                                    <small>IT and Software</small>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="data_entry">
+                                    <small>Data Entry</small>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="graphic_design">
+                                    <small>Graphic Design</small>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="teaching">
+                                    <small>Teaching</small>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="home_tuition">
+                                    <small>Home Tuition</small>
+                                </label>
+                            </div>
+
+                            <br>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="row">
+                        {% for job in job_list %}
+                            <div class="col-md-6">
+                                <div class="product-item">
+                                    <a href="{% url 'job' job.pk %}">
+                                        <img src="{{ job.image.url }}" alt="">
+                                    </a>
+                                    <div class="down-content">
+                                        <a href="{% url 'job' job.pk %}"><h4>{{ job.title }}</h4></a>
+
+                                        <h6>Rs. {{ job.salary|intcomma }}</h6>
+
+                                        <h4><small><i class="fa fa-briefcase"></i> {{ job.get_category_display }}<br>
+                                            <strong><i
+                                                    class="fa fa-building"></i> {{ job.company_name }}</strong></small>
+                                        </h4>
+
+                                        <small>
+                                            <strong title="Posted on"><i
+                                                    class="fa fa-calendar"></i> {{ job.created_at }}</strong>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong title="Type"><i class="fa fa-file"></i> {{ job.get_type_display }}
+                                            </strong> &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong title="Location"><i
+                                                    class="fa fa-map-marker"></i> {{ job.get_location_display }}
+                                            </strong>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="col-md-12">
+                            <ul class="pages">
+                                {% if page_obj.has_previous %}
+                                    <li><a href="?page=1">First</a></li>
+                                    <li>
+                                        <a href="?page={{ page_obj.previous_page_number }}">
+                                            <i class="fa fa-angle-double-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                        <li><a href="?page={{ num }}">{{ num }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li>
+                                        <a href="?page={{ page_obj.next_page_number }}">
+                                            <i class="fa fa-angle-double-right"></i>
+                                        </a>
+                                    </li>
+                                    <li><a href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

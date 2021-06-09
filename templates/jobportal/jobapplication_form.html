@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Apply for job {% endblock title %}
+{% block heading %}
+    <div class="page-heading contact-heading header-text"
+         style="background-image: url({% static 'assets/images/heading-4-1920x500.jpg' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content">
+                        <h4>{{ job.title }}</h4>
+                        <h2>Apply for job</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock heading %}
+
+
+{% block content %}
+    <div class="products" id="first_content_div">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-sm-8">
+                    <p class="lead">
+                        <i class="fa fa-map-marker"></i> {{ job.get_location_display }} &nbsp;&nbsp;
+                        <i class="fa fa-calendar"></i> {{ job.created_at }} &nbsp;&nbsp;
+                        <i class="fa fa-file"></i> {{ job.get_type_display }}
+                    </p>
+
+                    <br>
+                    <br>
+
+                    <div class="form-group">
+                        <h5>{{ job.title }}</h5>
+                    </div>
+                    <p>{{ job.description|slice:"0:150" }}...</p>
+
+                    <br>
+                    <br>
+                </div>
+
+                <div class="col-md-3 col-sm-4">
+
+                    <div class="d-flex justify-content-center">
+                        <img src="{{ job.author.profile.image.url }}" class="rounded-circle account-img border">
+                    </div>
+
+                    <div class="social-icons text-center">
+                        <div class="col mt-lg-3">
+                            <a href="{% url 'user' user.pk %}">
+                                <h5>{{ job.author.first_name|add:' '|add:job.author.last_name }}</h5>
+                                <p class="text-muted">{{ job.author.email }}</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2>Attach a resume with a cover letter to apply for this job</h2>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="generic-form">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                {{ form|crispy }}
+                            </fieldset>
+                            <div class="form-group">
+                                <button class="filled-button" type="submit">Apply now!</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="{{ job.image.url }}" class="img-fluid" alt="">
+                    <h5 class="text-center" style="margin-top: 15px;">{{ job.title }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Handler for .ready() called.
+            $('html, body').animate({
+                scrollTop: $('#first_content_div').offset().top
+            }, 'slow');
+        });
+    </script>
+{% endblock content %}

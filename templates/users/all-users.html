@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+
+{% block title %}{% endblock title %}
+{% block heading %}
+    <div class="page-heading about-heading header-text"
+         style="background-image: url({% static 'assets/images/heading-6-1920x500.jpg' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content">
+                        <h4>List of all users using this website</h4>
+                        <h2>IncomeHub users</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock heading %}
+
+
+{% block content %}
+    <div class="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+
+                        {% for user_ in page_obj.object_list %}
+                            <div class="row w-100 border-bottom mb-lg-5">
+                                <div class="col-sm-3" style="width: 1%">
+                                    <a href="{% url 'user' user_.pk %}" class="services-item-image">
+                                        <img src="{{ user_.profile.image.url }}"
+                                             class="rounded-circle account-img border"
+                                             alt="">
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <div class="down-content">
+                                        <h4>
+                                            <a href="{% url 'user' user_.pk %}">
+                                                {{ user_.first_name|add:' '|add:user_.last_name }}
+                                            </a>
+                                        </h4>
+
+                                        <p style="margin: 0;" class="border-bottom mb-lg-2">
+                                            {{ user_.email }} &nbsp;&nbsp;|&nbsp;&nbsp;
+                                            Joined at {{ user_.date_joined }}
+                                        </p>
+
+                                        <p>{{ user_.profile.bio|slice:"0:150" }}...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="col-md-12">
+                            <ul class="pages">
+                                {% if page_obj.has_previous %}
+                                    <li><a href="?page=1">First</a></li>
+                                    <li>
+                                        <a href="?page={{ page_obj.previous_page_number }}">
+                                            <i class="fa fa-angle-double-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                        <li><a href="?page={{ num }}">{{ num }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li>
+                                        <a href="?page={{ page_obj.next_page_number }}">
+                                            <i class="fa fa-angle-double-right"></i>
+                                        </a>
+                                    </li>
+                                    <li><a href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="contact-form">
+                        <div class="form-group">
+                            <h5>Search users:</h5>
+                        </div>
+
+                        <form method="GET">
+                            <div class="row">
+                                <div class="col-8">
+                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                                           aria-describedby="basic-addon2" name="search">
+                                </div>
+
+                                <div class="col-4">
+                                    <button class="filled-button" type="submit">Go</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

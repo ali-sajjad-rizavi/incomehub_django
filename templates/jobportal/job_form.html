@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %} Post a new Job {% endblock title %}
+{% block heading %}
+    <div class="page-heading about-heading header-text"
+         style="background-image: url({% static 'assets/images/heading-6-1920x500.jpg' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content">
+                        {% with request.resolver_match.url_name as url_name %}
+                            {% if url_name == "job-create" %}
+                                <h4>Find the best talent!</h4>
+                                <h2>Post a job</h2>
+                            {% else %}
+                                <h4>All job information will be updated</h4>
+                                <h2>Edit job info</h2>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock heading %}
+
+
+{% block content %}
+    <div class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        {% if request.resolver_match.url_name == "job-create" %}
+                            <h2>Post a job to find best talent nearby!</h2>
+                        {% else %}
+                            <h2>Edit the Job details here!</h2>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="generic-form">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                {{ form|crispy }}
+                            </fieldset>
+                            <div class="form-group">
+                                {% if request.resolver_match.url_name == "job-create" %}
+                                    <button class="filled-button" type="submit">Post!</button>
+                                {% else %}
+                                    <button class="filled-button" type="submit">Update</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="{% static 'assets/images/person-sitting.jpg' %}" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

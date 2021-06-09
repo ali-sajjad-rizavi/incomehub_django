@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+
+{% block title %} {{ user_.username }}'s Profile {% endblock title %}
+{% block heading %}
+    <div class="page-heading contact-heading header-text"
+         style="background-image: url({% static 'assets/images/heading-4-1920x500.jpg' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content">
+                        <h4>{{ user_.first_name|add:' '|add:user_.last_name }}'s Profile</h4>
+                        <h2>{{ user_.username }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock heading %}
+
+
+{% block content %}
+    <div class="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-sm-8">
+                    <div class="form-group">
+                        <div class="row w-50">
+                            <div class="col">
+                                <img src="{{ user_.profile.image.url }}" class="rounded-circle account-img border">
+                            </div>
+                            <div class="col mt-lg-3">
+                                <h5>{{ user_.first_name|add:' '|add:user_.last_name }}</h5>
+                                <p class="text-muted">{{ user_.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-4">
+                    <br>
+
+                    <ul class="social-icons text-center">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                    </ul>
+
+                    <br>
+                    <br>
+
+                    <div class="contact-form">
+                        <a href="{% url 'user-jobs' user_.pk %}"
+                           class="filled-button btn-block d-flex justify-content-center">Jobs posted</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="section-heading">
+                        <h2>About me</h2>
+                    </div>
+                    <p>{{ user_.profile.bio }}</p>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="section-heading">
+                        <h2>Contact Details</h2>
+                    </div>
+
+                    <div class="left-content">
+                        <p>
+                            <span>Name</span>
+                            <br>
+                            <strong>{{ user_.first_name|add:' '|add:user_.last_name }}</strong>
+                        </p>
+
+                        <p>
+                            <span>Email</span>
+                            <br>
+                            <strong>
+                                <a href="mailto:{{ user_.email }}">{{ user_.email }}</a>
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

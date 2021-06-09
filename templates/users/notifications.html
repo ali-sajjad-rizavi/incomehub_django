@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+
+{% block title %}{% endblock title %}
+{% block heading %}
+    <div class="page-heading about-heading header-text"
+         style="background-image: url({% static 'assets/images/heading-6-1920x500.jpg' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-content">
+                        <h4>See people who have applied to your job posts</h4>
+                        <h2>Notifications</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock heading %}
+
+
+{% block content %}
+    <div class="products">
+        <div class="container">
+            <div class="row">
+                {% for job_application in page_obj.object_list %}
+                    <div class="row w-100 mb-lg-5 bg-light rounded p-3">
+                        <div class="col-sm-2" style="width: 1%">
+                            <a href="{% url 'user' job_application.applicant.pk %}" class="services-item-image">
+                                <img src="{{ job_application.applicant.profile.image.url }}"
+                                     class="rounded-circle border account-img"
+                                     alt="">
+                            </a>
+                        </div>
+
+                        <div class="col">
+                            <div class="down-content">
+                                <h5>
+                                    <a href="#">
+                                        {{ job_application.applicant.first_name|add:' '|add:job_application.applicant.last_name }}
+                                    </a>
+                                    has applied for your job post
+                                    <a href="{% url 'job' job_application.job.pk %}">
+                                        "{{ job_application.job.title }}"
+                                    </a>
+                                </h5>
+
+                                <p style="margin: 0;" class="border-bottom mb-lg-2">
+                                    {{ job_application.applicant.email }}
+                                </p>
+
+                                <p>
+                                    <strong>He says:</strong>
+                                    "{{ job_application.cover_letter|slice:"0:150" }}..."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="col-md-12">
+                    <ul class="pages">
+                        {% if page_obj.has_previous %}
+                            <li><a href="?page=1">First</a></li>
+                            <li>
+                                <a href="?page={{ page_obj.previous_page_number }}">
+                                    <i class="fa fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li><a href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li>
+                                <a href="?page={{ page_obj.next_page_number }}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                            <li><a href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

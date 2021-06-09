@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'assets/images/favicon.ico' %}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+
+    <title>Income Hub - {% block title %}{% endblock title %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- ***** Preloader Start ***** -->
+<div id="preloader">
+    <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
+
+<!-- Header -->
+<header class="">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}"><h2>Income <em>Hub</em></h2></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <!-- ml-auto for Navbar right side -->
+                <!-- mr-auto for Navbar left side -->
+                <ul class="navbar-nav ml-auto">
+                    {% with request.resolver_match.url_name as url_name %}
+                        <li class="nav-item {% if url_name == 'index' %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'index' %}">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {% if url_name == 'jobs' %}active{% endif %}" href="{% url 'jobs' %}">Jobs</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About us</a>
+                        </li>
+
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="#">Blog</a>#}
+{#                        </li>#}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true" aria-expanded="false">More</a>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'job-create' %}">Post a job</a>
+                                <a class="dropdown-item" href="{% url 'all-users' %}">IncomeHub Users</a>
+                                <a class="dropdown-item" href="#">Team</a>
+                                <a class="dropdown-item" href="#">Terms</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+                    {% endwith %}
+
+                    <div class="ml-lg-5"></div>
+                    {% if user.is_authenticated %}
+                        <img src="{{ user.profile.image.url }}" alt="" class="rounded-circle"
+                             style="width: 50px; height: 50px;">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true" aria-expanded="false">Welcome, {{ user.first_name }}!</a>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'user-profile' %}">My Profile</a>
+                                <a class="dropdown-item" href="{% url 'notifications' %}">🔔 Notifications</a>
+                                <a class="dropdown-item" href="{% url 'current-user-jobs' %}">Posted Jobs</a>
+                                <a class="dropdown-item" href="#">Job Applications</a>
+                                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                        <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+{% block heading %}{% endblock heading %}
+
+{% if messages %}
+    <div class="container">
+        {% for msg in messages %}
+            <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% block content %}{% endblock content %}
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="inner-content">
+                    <p>Copyright © 2021 The Computing Hub - Created by:
+                        <a href="https://www.youtube.com/channel/UCbmOROlA7AAMFZKyKl_FCcQ">TheComputingHub.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+<!-- Additional Scripts -->
+<script src="{% static 'assets/js/custom.js' %}"></script>
+<script src="{% static 'assets/js/owl.js' %}"></script>
+</body>
+</html>
+
+{# TODO(Ali): All hyper links should have a destination address #}
