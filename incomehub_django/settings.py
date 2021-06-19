@@ -13,13 +13,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import json
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # -- Added by Ali Sajjad --
 # Currently this file has information to connect to RDS database instance
 # on AWS. We don't want to expose connection secrets.
-MY_SECRETS = json.load(open("secrets.json", "r"))
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+MY_SECRETS = json.load(open(BASE_DIR / "secrets.json", "r"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
