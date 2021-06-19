@@ -1,6 +1,10 @@
 # incomehub_django
 My final year project, a website where people can
 find jobs, post jobs, and do more.
+- Front end with Bootstrap
+- Backend with Django3
+- Cloud database: Amazon RDS for PostgreSQL (AWS)
+- Media file cloud uploads: AWS S3 Bucket
 
 ### Members:
 - Sayyid Ali Sajjad Rizavi ( BCSF17M555 )
