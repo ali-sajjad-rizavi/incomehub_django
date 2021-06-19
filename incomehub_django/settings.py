@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'jobportal.apps.JobportalConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -94,9 +95,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': "postgres",
-        'USER': MY_SECRETS["POSTGRES_USER"],
-        'PASSWORD': MY_SECRETS["POSTGRES_PASSWORD"],
-        'HOST': MY_SECRETS["POSTGRES_DB_HOST"],
+        'USER': MY_SECRETS["AWS_RDS_POSTGRES_USER"],
+        'PASSWORD': MY_SECRETS["AWS_RDS_POSTGRES_PASSWORD"],
+        'HOST': MY_SECRETS["AWS_RDS_POSTGRES_DB_HOST"],
         'PORT': "5432",
     }
 }
@@ -143,7 +144,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Added by Ali...
+# -- Added by Ali --
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -151,3 +152,13 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Now we'll use S3 bucket for file uploads
+
+AWS_ACCESS_KEY_ID = MY_SECRETS["AWS_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = MY_SECRETS["AWS_SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = MY_SECRETS["AWS_STORAGE_BUCKET_NAME"]
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
