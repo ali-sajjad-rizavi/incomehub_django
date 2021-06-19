@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import json
+
+# -- Added by Ali Sajjad --
+# Currently this file has information to connect to RDS database instance
+# on AWS. We don't want to expose connection secrets.
+MY_SECRETS = json.load(open("secrets.json", "r"))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -87,11 +93,11 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgresroot',
-        'HOST': 'incomehub-fyp-free.cqeq9hj9hdit.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'NAME': "postgres",
+        'USER': MY_SECRETS["POSTGRES_USER"],
+        'PASSWORD': MY_SECRETS["POSTGRES_PASSWORD"],
+        'HOST': MY_SECRETS["POSTGRES_DB_HOST"],
+        'PORT': "5432",
     }
 }
 
