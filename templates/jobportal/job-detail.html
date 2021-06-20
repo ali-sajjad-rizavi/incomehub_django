@@ -23,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-9 col-sm-8">
-                    {% if user == job.author %}
+                    {% if user == job.author or user.is_superuser %}
                         <a href="{% url 'job-update' job.pk %}" class="filled-button mb-lg-5">Edit job details</a>
                     {% endif %}
                     <p class="lead">
@@ -37,12 +37,12 @@
 
                     <div class="form-group border-bottom mb-lg-5">
                         <div class="row w-50">
-                            <div class="col"><img src="{{ user.profile.image.url }}"
+                            <div class="col"><img src="{{ job.author.profile.image.url }}"
                                                   class="rounded-circle account-img border"></div>
                             <div class="col mt-lg-3">
-                                <a href="{% url 'user' user.pk %}">
-                                    <h5>{{ user.first_name|add:' '|add:user.last_name }}</h5>
-                                    <p class="text-muted">{{ user.email }}</p>
+                                <a href="{% url 'user' job.author.pk %}">
+                                    <h5>{{ job.author.first_name|add:' '|add:job.author.last_name }}</h5>
+                                    <p class="text-muted">{{ job.author.email }}</p>
                                 </a>
                             </div>
                         </div>
