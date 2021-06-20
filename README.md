@@ -21,19 +21,10 @@ python -m venv venv
 .\venv\scripts\activate.bat
 pip install -r requirements.txt
 ```
-- Put a `secrets.json` file in the project root directory (the
-  same folder where `manage.py` file exists). The structure of
-  `secrets.json` (all secret information will be kept here)
-  should be as follows:
+- Set the following environment variables:
 ```
-{
-    "AWS_RDS_POSTGRES_USER": "MyDbUser",
-    "AWS_RDS_POSTGRES_PASSWORD": "*****",
-    "AWS_RDS_POSTGRES_DB_HOST": "www.example.com",
-    "AWS_ACCESS_KEY_ID": "ABC123",
-    "AWS_SECRET_ACCESS_KEY": "*****",
-    "AWS_STORAGE_BUCKET_NAME": "aws-s3-bucket-name"
-}
+AWS_RDS_POSTGRES_PASSWORD = "*****"
+AWS_SECRET_ACCESS_KEY = "*****"
 ```
 
 - Now to run the server:

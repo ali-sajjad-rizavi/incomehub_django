@@ -11,15 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import json
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# -- Added by Ali Sajjad --
-# Currently this file has information to connect to RDS database instance
-# on AWS. We don't want to expose connection secrets.
-MY_SECRETS = json.load(open(BASE_DIR / "secrets.json", "r"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -95,9 +90,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': "postgres",
-        'USER': MY_SECRETS["AWS_RDS_POSTGRES_USER"],
-        'PASSWORD': MY_SECRETS["AWS_RDS_POSTGRES_PASSWORD"],
-        'HOST': MY_SECRETS["AWS_RDS_POSTGRES_DB_HOST"],
+        'USER': "postgres",
+        'PASSWORD': os.environ["AWS_RDS_POSTGRES_PASSWORD"],
+        'HOST': "incomehub-fyp-free.cqeq9hj9hdit.us-east-1.rds.amazonaws.com",
         'PORT': "5432",
     }
 }
@@ -156,9 +151,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Now we'll use S3 bucket for file uploads
 
-AWS_ACCESS_KEY_ID = MY_SECRETS["AWS_ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = MY_SECRETS["AWS_SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = MY_SECRETS["AWS_STORAGE_BUCKET_NAME"]
+AWS_ACCESS_KEY_ID = "AKIA5ATJDK3CNXJ2UF6K"
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = "incomehub-media-files"
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 
