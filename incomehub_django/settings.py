@@ -25,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["INCOMEHUB_DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.environ.get("INCOMEHUB_DJANGO_DEBUG_VALUE") == "True")
+DEBUG = True
+# DEBUG = (os.environ.get("INCOMEHUB_DJANGO_DEBUG_VALUE") == "True")
 
 ALLOWED_HOSTS = ['*']
 
@@ -146,7 +147,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # -- Added by Ali --
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # For heroku
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
