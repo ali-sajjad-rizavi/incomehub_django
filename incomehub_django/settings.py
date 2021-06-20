@@ -25,8 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["INCOMEHUB_DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = (os.environ.get("INCOMEHUB_DJANGO_DEBUG_VALUE") == "True")
+DEBUG = (os.environ.get("INCOMEHUB_DJANGO_DEBUG_VALUE") == "True")
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,7 +43,6 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'crispy_forms',
     'storages',
-    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +53,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # For heroku
 ]
 
 ROOT_URLCONF = 'incomehub_django.urls'
@@ -167,4 +164,4 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), databases=False)
