@@ -23,6 +23,7 @@ pip install -r requirements.txt
 ```
 - Set the following environment variables:
 ```
+INCOMEHUB_DJANGO_SECRET_KEY = "*****"
 AWS_RDS_POSTGRES_PASSWORD = "*****"
 AWS_SECRET_ACCESS_KEY = "*****"
 ```
