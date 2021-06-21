@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="generic-form">
-                        <form method="POST">
+                        <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <fieldset class="form-group">
                                 {{ form|crispy }}
