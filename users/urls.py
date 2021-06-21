@@ -19,4 +19,5 @@ urlpatterns = [
     path('my-job-posts/', views.posted_jobs, name='current-user-jobs'),
     path('<int:user_id>/jobs/', views.user_jobs, name='user-jobs'),
     path('my-notifications/', views.notifications, name='notifications'),
+    path('my-applications/', views.my_job_applications, name='current-user-job_applications'),
 ]

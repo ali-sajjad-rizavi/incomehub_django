@@ -93,3 +93,11 @@ def notifications(request):
     paginator = Paginator(job_application_list, 10)
     context = {'page_obj': paginator.get_page(request.GET.get('page'))}
     return render(request, 'users/notifications.html', context=context)
+
+
+@login_required
+def my_job_applications(request):
+    my_applications = JobApplication.objects.filter(applicant=request.user).order_by('-created_at')
+    paginator = Paginator(my_applications, 10)
+    context = {'page_obj': paginator.get_page(request.GET.get('page'))}
+    return render(request, 'users/job-applications.html', context=context)
