@@ -5,6 +5,7 @@ find jobs, post jobs, and do more.
 - Backend with Django3
 - Cloud database: Amazon RDS for PostgreSQL (AWS)
 - Media file cloud uploads: AWS S3 Bucket
+- Django website deployed on heroku
 
 ### Members:
 - Sayyid Ali Sajjad Rizavi ( BCSF17M555 )
